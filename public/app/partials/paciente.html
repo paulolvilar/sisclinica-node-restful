@@ -1,0 +1,69 @@
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+      Identificação
+    </div>
+    <div class="panel-body">
+      <form>
+        <div class="form-group">
+          <label for="nv-nome">Nome</label>
+          <input type="text" class="form-control" id="nv-nome" placeholder="Nome" ng-model="paciente.nome">
+        </div>
+        <div class="form-group">
+          <label for="nv-sexo">Sexo</label>
+          <select class="form-control" id="nv-sexo" ng-model="paciente.sexo">
+            <option value="feminino">feminino</option>
+            <option value="masculino">masculino</option>
+          </select>
+        </div>        
+        <div class="form-group">
+          <label for="nv-dtnasc">Data de Nascimento</label>
+          <input type="text" class="form-control" id="nv-dtnasc"  placeholder="dd/mm/yyyy" ng-model="paciente.dtNascimento">
+        </div>
+        <div class="form-group">
+          <label for="nv-estadocivil">Estado Civil</label>
+          <select class="form-control" id="nv-estadocivil" ng-model="paciente.estadoCivil">
+            <option value="solteiro">Solteiro(a)</label>
+            <option value="casado">Casado(a)</option>
+            <option value="divorciado">Divorciado(a)</option>
+            <option value="viuvo">Viúvo(a)</option>
+            <option value="separado">Separado(a)</option>
+            <option value="companheiro">Companheiro(a)</option>
+          </select>
+        </div>        
+        <div class="form-group">
+          <label for="nv-profissao">Profissão</label>
+          <input type="text" class="form-control" id="nv-profissao" placeholder="Profissão" ng-model="paciente.profissao">
+        </div>                
+        <div class="form-group">
+          <label for="nv-naturalidade">Naturalidade</label>
+          <input type="text" class="form-control" id="nv-naturalidade" placeholder="Naturalidade" ng-model="paciente.naturalidade">
+        </div>                
+        <div class="form-group">
+          <label for="nv-endereco">Endereço</label>
+          <input type="text" class="form-control" id="nv-endereco" placeholder="Endereço" ng-model="paciente.endereco">
+        </div>                
+        <div class="form-group">
+          <label for="nv-telefones">Telefones</label>
+          <input type="text" class="form-control" id="nv-telefones" placeholder="Telefones" ng-model="paciente.telefones">
+        </div>                                
+        <div class="form-group">
+          <label for="nv-email">E-mail</label>
+          <input type="text" class="form-control" id="nv-email" placeholder="E-mail" ng-model="paciente.email">
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <button class="btn btn-primary" ng-click="teste()">Confirmar</button>
+      <button class="btn btn-danger">Cancelar</button>
+    </div>
+  </div>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function(){
+     $("#nv-dtnasc").inputmask("date");
+    });
+  </script>
