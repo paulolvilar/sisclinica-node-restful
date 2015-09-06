@@ -6,9 +6,7 @@
         <input type="text" class="form-control" style="width:100%" id="exampleInputName2" placeholder="nome do paciente" />
       </div>
       <button type="submit" class="btn btn-primary">pesquisar</button>
-      <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">
-        novo paciente
-      </button>
+      <a type="button" href="#paciente" class="btn btn-default" >Novo Paciente</a>        
     </div>
   </div>
 </div>
@@ -19,15 +17,15 @@
         <tr>
           <th>#</th>
           <th>Nome</th>
-          <th>E-mail</th>
+          <th>Data de Nascimento</th>
           <th>-</th>
         </tr>
       </thead>
       <tbody>
         <tr ng-repeat="paciente in pacientes">
-          <th scope="row">{{paciente.codigo}}</th>
-          <td>{{paciente.nome}}</td>
+          <th scope="row"><a ng-href="#pacientes/{{paciente._id}}">{{paciente.nome}}</a></th>
           <td>{{paciente.email}}</td>
+          <td>{{paciente.dtNascimento}}</td>
           <td><a ng-href="#pacientes/{{paciente.codigo}}/prontuario">prontuario</a></td>
         </tr>
       </tbody>

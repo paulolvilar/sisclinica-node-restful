@@ -13,8 +13,11 @@
     "tests"
   ],
   "dependencies": {
-    "bootstrap": "~3.3.4",
     "angular": "*",
-    "angular-route":"*"
+    "angular-resource": "~1.4.5",
+    "angular-route": "*",
+    "bootstrap": "~3.3.4",
+    "jquery": "*",
+    "jquery.inputmask": "*"
   }
 }

@@ -45,18 +45,26 @@ var sendEmail = function(req, res, next) {
 var Paciente = restful.model( "paciente", mongoose.Schema({
     nome: 'string',
     email: 'string',
+    sexo: 'string',
+    dtNascimento: 'string',
+    estadoCivil: 'string',
+    profissao: 'string',
+    naturalidade: 'string',
+    endereco: 'string',
+    telefone: 'string',
+    email: 'string'
   }))
   .methods(['get', 'put', 'delete', 'post']);
 
-Paciente.register(app, '/paciente'); // Register the user model at the localhost:3000/user
+Paciente.register(app, '/api/pacientes'); // Register the user model at the localhost:3000/paciente
 
 
 app.use('/', routes);
-app.use('/users', users);
+//app.use('/users', users);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  var err = new Error('Not Found xx');
+  var err = new Error('Not Found');
   err.status = 404;
   next(err);
 });
