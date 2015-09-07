@@ -51,8 +51,26 @@ var Paciente = restful.model( "paciente", mongoose.Schema({
     profissao: 'string',
     naturalidade: 'string',
     endereco: 'string',
-    telefone: 'string',
-    email: 'string'
+    telefones: 'string',
+    email: 'string',
+    prontuario:{
+      historiaClinica:{
+        queixaPrincipal: 'string',
+        historiaDoencaAtual: 'string',
+        doencasAnteriores: 'string',
+        tratamentos: 'string',
+        alergias: 'string',
+        vacinacao: 'string',
+        outros: 'string'
+      },
+      exameFisico: 'string',
+      diagnostico: 'string',
+      conduta: 'string',
+      evolucao:[{
+        data: 'string',
+        texto: 'string'
+      }]
+    }
   }))
   .methods(['get', 'put', 'delete', 'post']);
 

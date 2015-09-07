@@ -3,9 +3,9 @@
     <div class="form-inline well">
       <div class="form-group" style="width:50%">
         <label for="exampleInputName2" class="sr-only">Informe o nome do paciente</label>
-        <input type="text" class="form-control" style="width:100%" id="exampleInputName2" placeholder="nome do paciente" />
+        <input type="text" class="form-control" style="width:100%" id="exampleInputName2" placeholder="nome do paciente" ng-model="nomePaciente" ng-keyup="$event.keyCode == 13 && get()"/>
       </div>
-      <button type="submit" class="btn btn-primary">pesquisar</button>
+      <button type="submit" class="btn btn-primary" ng-click="get()">pesquisar</button>
       <a type="button" href="#paciente" class="btn btn-default" >Novo Paciente</a>        
     </div>
   </div>
@@ -15,18 +15,18 @@
     <table class="table">
       <thead>
         <tr>
-          <th>#</th>
           <th>Nome</th>
+          <th>e-mail</th>
           <th>Data de Nascimento</th>
           <th>-</th>
         </tr>
       </thead>
       <tbody>
-        <tr ng-repeat="paciente in pacientes">
+        <tr ng-repeat="paciente in pacientes | orderBy: 'nome'">
           <th scope="row"><a ng-href="#pacientes/{{paciente._id}}">{{paciente.nome}}</a></th>
           <td>{{paciente.email}}</td>
           <td>{{paciente.dtNascimento}}</td>
-          <td><a ng-href="#pacientes/{{paciente.codigo}}/prontuario">prontuario</a></td>
+          <td><a ng-href="#pacientes/{{paciente._id}}/prontuario">prontuario</a></td>
         </tr>
       </tbody>
     </table>
