@@ -1,14 +1,22 @@
+//todo: alterar estrategia de armazenamento de sessao express-session
+//todo: alterar 'keyboard cat'
+//todo: rever resave: true
+//todo: incluir login com passportjs http://passportjs.org/docs
+//todo: colocar https
+
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
+var session = require('express-session')
+var flash = require('connect-flash')
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var restful = require('node-restful');
 
 var routes = require('./routes/index');
-var users = require('./routes/users');
+//var users = require('./routes/users');
 var methodOverride = require('method-override')
 
 var app = express();
@@ -26,7 +34,13 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(methodOverride('X-HTTP-Method-Override'));
 app.use(cookieParser());
+app.use(session({ path: '/', httpOnly: true, secure: false, maxAge: null ,  genid: function(req) {
+    return require('crypto').randomBytes(48).toString('hex');
+  },resave: true,saveUninitialized:false,secret: 'keyboard cat'}));
+app.use(flash())
 app.use(express.static(path.join(__dirname, 'public')));
+
+
 
 /*
 var hashPassword = function(req, res, next) {

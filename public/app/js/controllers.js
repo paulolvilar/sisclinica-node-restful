@@ -12,7 +12,7 @@ sisclinicaControllers.controller('PacienteListCtrl', ['$scope', 'PacientesModel'
 
 function padDigits(number, digits) {return Array(Math.max(digits - String(number).length + 1, 0)).join(0) + number;}
 
-sisclinicaControllers.controller('ProntuarioCtrl', ['$rootScop$scope.paciente.delete()e','$scope', '$routeParams', 'PacientesModel',
+sisclinicaControllers.controller('ProntuarioCtrl', ['$rootScope','$scope', '$routeParams', 'PacientesModel',
   function ($rootScope, $scope, $routeParams, PacientesModel) {
     if($routeParams.paciente_id){
       $scope.paciente_id=$routeParams.paciente_id

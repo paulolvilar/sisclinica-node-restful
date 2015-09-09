@@ -42,11 +42,21 @@ function() {
  return {
   restrict : 'A',
   replace : true,
-  template : '<div class="flash row-fluid">'
- 
- + '<div class="flash-inner span4 offset4 alert alert-success" data-ng-repeat="msg in successMsg">{{msg}}</div>'
- 
- + '</div>',
+  template : 
+
+ '<div class="modal fade" id="avisoModal" tabindex="-1" role="dialog" aria-labelledby="avisoModalLabel">'
+ +'<div class="modal-dialog" role="document">'
+  +'<div class="modal-content">'
+   +'<div class="modal-header">'
+    +'<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>'
+    +'<h4 class="modal-title" id="avisoModalLabel">Aviso</h4>'
+   +'</div>'
+   +'<div class="modal-body">'+
+    '<div class="flash-inner span4 offset4 alert alert-success" data-ng-repeat="msg in successMsg">{{msg}}</div>'
+   +'</div>'
+   +'<div class="modal-footer">'
+    +'<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>'
+   +'</div></div></div></div>',
 
  // If you are using twitter bootsrtap along with angular
  //then you can use this classes span4 ,offset4 ,alert etc 
@@ -60,11 +70,11 @@ function() {
   }, true);
    
  function update() {
-  $('.flash')
-   .fadeIn(500).delay(3000)
-   .fadeOut(500, function() {
-   $rootScope.successMsg.splice(0);
-  });
+  //console.log($rootScope.successMsg)
+  $('#avisoModal').modal('show').on('hidden.bs.modal', function (e) {
+    $rootScope.successMsg.splice(0);
+  })
+  
  }
    }
   };
