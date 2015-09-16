@@ -117,7 +117,7 @@ var Imagem = restful.model( "imagem", mongoose.Schema({
     paciente_id: 'string'
 })).methods(['get', 'put', 'delete', 'post']);
 
-Imagem.register(app, '/api/imagem');
+Imagem.register(app, '/api/imagens');
 
 app.use('/', routes);
 //app.use('/users', users);

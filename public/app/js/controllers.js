@@ -12,8 +12,8 @@ sisclinicaControllers.controller('PacienteListCtrl', ['$scope', 'PacientesModel'
 
 function padDigits(number, digits) {return Array(Math.max(digits - String(number).length + 1, 0)).join(0) + number;}
 
-sisclinicaControllers.controller('ProntuarioCtrl', ['$http','$rootScope','$scope', '$routeParams', 'PacientesModel', 'Upload', '$timeout',
-  function ($http, $rootScope, $scope, $routeParams, PacientesModel, Upload, $timeout) {
+sisclinicaControllers.controller('ProntuarioCtrl', ['$http','$rootScope','$scope', '$routeParams', 'PacientesModel', 'ImagensModel','Upload', '$timeout',
+  function ($http, $rootScope, $scope, $routeParams, PacientesModel, ImagensModel, Upload, $timeout) {
     if($routeParams.paciente_id){
       $scope.paciente_id=$routeParams.paciente_id
       $scope.paciente=PacientesModel.get({_id:$scope.paciente_id})
@@ -44,8 +44,11 @@ sisclinicaControllers.controller('ProntuarioCtrl', ['$http','$rootScope','$scope
               // file is uploaded successfully
               //if(!$scope.paciente.imagens)!$scope.paciente.imagens=[];
               //!$scope.paciente.imagens.push{data:snow,}
-              console.log(file)
-              
+              var imagem = new ImagensModel()
+              imagem.filename = $scope.paciente_id+file.name
+              imagem.date = $scope.snow
+              imagem.paciente_id = $scope.paciente_id
+              ImagensModel.save(function(){console.log('salvou')})
             }).error(function(data, status, headers, config) {
               // handle error
               $scope.errorMsg = status + ': ' + data;
