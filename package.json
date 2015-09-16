@@ -16,6 +16,7 @@
     "express-session": "*",
     "mongoose": "*",
     "morgan": "*",
+    "multer": "^1.0.3",
     "node-restful": "*",
     "serve-favicon": "*"
   }

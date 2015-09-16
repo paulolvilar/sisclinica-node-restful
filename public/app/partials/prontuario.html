@@ -27,8 +27,21 @@
             </div>
           </div>
         </div>
+     </div>     
+
+     <div class="row">
+        <div class="col-md-12">
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+	 			Data de Admissão
+            </div>
+            <div class="panel-body">
+            	<p>{{paciente.prontuario.dataAdmissao}}</p>
+            </div>
+          </div>
+        </div>
      </div>
-      <div class="row">
+     <div class="row">
         <div class="col-md-12">
           <div class="panel panel-primary">
             <div class="panel-heading">
@@ -146,6 +159,60 @@
           </div>
         </div>
       </div>            
+
+<style type="text/css">
+  
+.thumb {
+    width: 24px;
+    height: 24px;
+    float: none;
+    position: relative;
+    top: 7px;
+}
+
+form .progress {
+    line-height: 15px;
+}
+
+
+.progress {
+    display: inline-block;
+    width: 100px;
+    border: 3px groove #CCC;
+}
+
+.progress div {
+    font-size: smaller;
+    background: orange;
+    width: 0;
+}
+
+</style>
+
+     <div class="row">
+        <div class="col-md-12">
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+	 			Imagens
+            </div>
+            <div class="panel-body">
+    	    	<!--input type="file" name="file" onchange="angular.element(this).scope().uploadFile(this.files)"/-->
+              <button type="file" ngf-select="uploadFiles($file)"
+                      accept="*" ngf-max-height="1000">
+                  Selecione o arquivo</button>
+              <br><br>
+              File:
+              <div style="font:smaller">{{f.name}} {{f.$error}} {{f.$errorParam}}
+                  <span class="progress" ng-show="f.progress >= 0">
+                      <div style="width:{{f.progress}}%"  
+                           ng-bind="f.progress + '%'"></div>
+                  </span>
+              </div>     
+              {{errorMsg}}
+            </div>
+          </div>
+        </div>
+     </div>
 
   <div class="row">
     <div class="col-md-12">

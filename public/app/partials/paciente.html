@@ -56,6 +56,18 @@
           <label for="nv-email">E-mail</label>
           <input type="text" class="form-control" id="nv-email" placeholder="E-mail" ng-model="paciente.email">
         </div>
+        <div class="form-group">
+          <label for="nv-convenio">Convenio</label>
+          <select class="form-control" id="nv-convenio" ng-model="paciente.convenio">
+            <option value=""></label>
+            <option value="particular">Particular</label>
+            <option value="cortesia">Cortesia</option>
+            <option value="unimed">Unimed</option>
+            <option value="amil">Amil</option>
+            <option value="hapvida">Hapvida</option>
+            <option value="geap">Geap</option>
+          </select>
+        </div>            
       </form>
     </div>
   </div>

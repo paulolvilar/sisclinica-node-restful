@@ -42,6 +42,24 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 
+
+
+// app.use(multer({ dest: './uploads/',
+//  rename: function (fieldname, filename) {
+//     return filename+Date.now();
+//   },
+// onFileUploadStart: function (file) {
+//   console.log(file.originalname + ' is starting ...')
+// },
+// onFileUploadComplete: function (file) {
+//   console.log(file.fieldname + ' uploaded to  ' + file.path)
+//   done=true;
+// }
+// }));
+
+
+
+
 /*
 var hashPassword = function(req, res, next) {
   if (!req.body.password)
@@ -56,6 +74,7 @@ var sendEmail = function(req, res, next) {
   next(); // I'll just pass though
 }
 */
+
 var Paciente = restful.model( "paciente", mongoose.Schema({
     nome: 'string',
     email: 'string',
@@ -67,7 +86,9 @@ var Paciente = restful.model( "paciente", mongoose.Schema({
     endereco: 'string',
     telefones: 'string',
     email: 'string',
+    convenio: 'string',
     prontuario:{
+      dataAdmissao: 'string',
       historiaClinica:{
         queixaPrincipal: 'string',
         historiaDoencaAtual: 'string',
@@ -90,6 +111,13 @@ var Paciente = restful.model( "paciente", mongoose.Schema({
 
 Paciente.register(app, '/api/pacientes'); // Register the user model at the localhost:3000/paciente
 
+var Imagem = restful.model( "imagem", mongoose.Schema({
+    filename: 'string',
+    date: 'string',
+    paciente_id: 'string'
+})).methods(['get', 'put', 'delete', 'post']);
+
+Imagem.register(app, '/api/imagem');
 
 app.use('/', routes);
 //app.use('/users', users);
