@@ -14,17 +14,18 @@ function padDigits(number, digits) {return Array(Math.max(digits - String(number
 
 sisclinicaControllers.controller('ProntuarioCtrl', ['$http','$rootScope','$scope', '$routeParams', 'PacientesModel', 'ImagensModel','Upload', '$timeout',
   function ($http, $rootScope, $scope, $routeParams, PacientesModel, ImagensModel, Upload, $timeout) {
+    $scope.imagens=[]
     if($routeParams.paciente_id){
-      $scope.paciente_id=$routeParams.paciente_id
-      $scope.paciente=PacientesModel.get({_id:$scope.paciente_id})
-          
+      $scope.paciente_id= $routeParams.paciente_id
+      $scope.paciente= PacientesModel.get({_id:$scope.paciente_id})
+      $scope.imagens = ImagensModel.query({paciente_id:$scope.paciente_id})
+
       var now = new Date()
       $scope.snow = padDigits(now.getDate(),2)+"/"+padDigits(now.getMonth()+1,2)+"/"+padDigits(now.getFullYear(),4)
       $scope.evoData=$scope.snow
     }else{
       $rootScope.successMsg.push('erro')
     }
-    
 
     $scope.uploadFiles = function(file) {
         $scope.f = file;
@@ -33,61 +34,25 @@ sisclinicaControllers.controller('ProntuarioCtrl', ['$http','$rootScope','$scope
                 url: '/createpost',
                 file: file,
                 fields:{pacienteid:$scope.paciente_id}
-               
             });
 
             file.upload.progress(function(evt) {
               file.progress = Math.min(100, parseInt(100.0 * 
                                                        evt.loaded / evt.total));
-              //console.log('progress: ' + parseInt(100.0 * evt.loaded / evt.total) + '% file :'+ evt.config.file.name);
             }).success(function(data, status, headers, config) {
               // file is uploaded successfully
-              //if(!$scope.paciente.imagens)!$scope.paciente.imagens=[];
-              //!$scope.paciente.imagens.push{data:snow,}
               var imagem = new ImagensModel()
               imagem.filename = $scope.paciente_id+file.name
               imagem.date = $scope.snow
               imagem.paciente_id = $scope.paciente_id
-              ImagensModel.save(function(){console.log('salvou')})
+              ImagensModel.save(imagem, function(){console.log('salvou')})
+              $scope.imagens.push(imagem);
             }).error(function(data, status, headers, config) {
               // handle error
               $scope.errorMsg = status + ': ' + data;
             })
-
-
-
-            /*then(function (response) {
-                console.log("fim")
-                $timeout(function () {
-                    file.result = response.data;
-                });
-            }, function (response) {
-                if (response.status > 0)
-                    $scope.errorMsg = response.status + ': ' + response.data;
-            });
-
-            file.upload.progress(function (evt) {
-                file.progress = Math.min(100, parseInt(100.0 * 
-                                                       evt.loaded / evt.total));
-            });*/
-        }   
+        }
     }
-
-
-
-
-
-    // $scope.uploadFile = function(files) {
-    //   var fd = new FormData();
-    //   //Take the first selected file
-    //   fd.append("file", files[0]);
-
-    //   $http.post('/createpost', fd, {
-    //       //withCredentials: true,
-    //       headers: {'Content-Type': 'multipart/mixed', 'boundary':'frontier' },
-    //       transformRequest: angular.identity
-    //   }).success( function(){console.log('ok')} ).error( function(){console.log('erro')} );
-    // };
 
     $scope.teste=function(){
       if($scope.paciente._id){

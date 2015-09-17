@@ -27,7 +27,7 @@
             </div>
           </div>
         </div>
-     </div>     
+     </div>
 
      <div class="row">
         <div class="col-md-12">
@@ -62,24 +62,24 @@
                   <div class="form-group">
                     <label for="nv-doencasAnteriores">Doenças Anteriores ou Preexistentes</label>
                     <textarea id="nv-doencasAnteriores" class="form-control" rows="1" ng-model="paciente.prontuario.historiaClinica.doencasAnteriores"></textarea>
-                  </div>        
+                  </div>
                   <div class="form-group">
                     <label for="nv-tratamentos">Tratamentos, Internações e Transfusões</label>
                     <textarea id="nv-tratamentos" class="form-control" rows="1" ng-model="paciente.prontuario.historiaClinica.tratamentos"></textarea>
-                  </div>        
+                  </div>
                   <div class="form-group">
                     <label for="nv-alergias">Alergias a Alimentos ou Medicamentos</label>
                     <textarea id="nv-alergias" class="form-control" rows="1" ng-model="paciente.prontuario.historiaClinica.alergias"></textarea>
-                  </div>        
+                  </div>
                   <div class="form-group">
                     <label for="nv-vacinacao">Vacinação</label>
                     <textarea id="nv-vacinacao" class="form-control" rows="1" ng-model="paciente.prontuario.historiaClinica.vacinacao"></textarea>
-                  </div>        
+                  </div>
                   <p>Outros</p>
                   <div class="form-group">
                     <textarea id="nv-hppp" class="form-control" rows="1" ng-model="paciente.prontuario.historiaClinica.outros"></textarea>
-                  </div>        
-              </form>                  
+                  </div>
+              </form>
             </div>
           </div>
         </div>
@@ -93,11 +93,11 @@
                  <div class="form-group">
                     <textarea id="nv-hppp" class="form-control" rows="1" ng-model="paciente.prontuario.exameFisico"></textarea>
                   </div>
-              </form>                  
+              </form>
             </div>
           </div>
         </div>
-      </div>      
+      </div>
       <div class="row">
         <div class="col-md-12">
           <div class="panel panel-primary">
@@ -107,11 +107,11 @@
                  <div class="form-group">
                     <textarea id="nv-hppp" class="form-control" rows="1" ng-model="paciente.prontuario.diagnostico"></textarea>
                   </div>
-              </form>                  
+              </form>
             </div>
           </div>
         </div>
-      </div>            
+      </div>
       <div class="row">
         <div class="col-md-12">
           <div class="panel panel-primary">
@@ -121,11 +121,11 @@
                  <div class="form-group">
                     <textarea id="nv-hppp" class="form-control" rows="1" ng-model="paciente.prontuario.conduta"></textarea>
                   </div>
-              </form>                  
+              </form>
             </div>
           </div>
         </div>
-      </div>            
+      </div>
       <div class="row">
         <div class="col-md-12">
           <div class="panel panel-primary">
@@ -138,7 +138,7 @@
                     <div class="form-group">
                       <textarea id="nv-hppp" class="form-control" rows="2">{{evolucao.texto}}</textarea>
                     </div>
-                  </form>                  
+                  </form>
                 </div>
                 <div class="panel panel-primary">
                   <div class="panel-heading">Nova Evolução
@@ -151,17 +151,17 @@
                     <div class="form-group">
                       <label for="nv-evo-texto">Texto</label>
                       <textarea id="nv-evo-texto" class="form-control" ng-model="evoTexto" rows="2"></textarea>
-                    </div>                    
-                  </form>                  
+                    </div>
+                  </form>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>            
+      </div>
 
 <style type="text/css">
-  
+
 .thumb {
     width: 24px;
     height: 24px;
@@ -187,6 +187,14 @@ form .progress {
     width: 0;
 }
 
+
+.thumb {
+margin: -0.5em 1em 1.5em 0;
+padding-bottom: 1em;
+height: 100px;
+width: 100px;
+}
+
 </style>
 
      <div class="row">
@@ -200,15 +208,15 @@ form .progress {
               <button type="file" ngf-select="uploadFiles($file)"
                       accept="*" ngf-max-height="1000">
                   Selecione o arquivo</button>
-              <br><br>
+
               File:
-              <div style="font:smaller">{{f.name}} {{f.$error}} {{f.$errorParam}}
-                  <span class="progress" ng-show="f.progress >= 0">
-                      <div style="width:{{f.progress}}%"  
-                           ng-bind="f.progress + '%'"></div>
-                  </span>
-              </div>     
+              <span style="font:smaller">{{f.name}} {{f.$error}} {{f.$errorParam}}
+                  <span ng-show="f.progress >= 0"> {{f.progress}}%</span>
+              </span>
               {{errorMsg}}
+            </div>
+            <div>
+              <img ng-repeat="imagem in imagens" class="thumb" ng-src="imagens/{{imagem.filename}}" />
             </div>
           </div>
         </div>
@@ -217,12 +225,12 @@ form .progress {
   <div class="row">
     <div class="col-md-12">
       <button class="btn btn-primary" ng-click="teste()">Confirmar</button>
-      <a type="button" href="#/pacientes" class="btn btn-danger" >Voltar</a>        
+      <a type="button" href="#/pacientes" class="btn btn-danger" >Voltar</a>
     </div>
-  </div>   
+  </div>
 
 
-  
+
 
 
   <script type="text/javascript">
