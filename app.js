@@ -14,15 +14,89 @@ var flash = require('connect-flash')
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var restful = require('node-restful');
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
 
 var routes = require('./routes/index');
 var imgRoutes = require('./routes/imagens');
+var loginRoutes = require('./routes/login');
 //var users = require('./routes/users');
 var methodOverride = require('method-override')
 
 var app = express();
 
 mongoose.connect("mongodb://localhost/restful");
+
+//para autenticacao
+// grab the things we need
+var Schema = mongoose.Schema;
+
+// create a schema
+var UserSchema = new Schema({
+  name: String,
+  username: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
+  admin: Boolean,
+  location: String,
+  meta: {
+    age: Number,
+    website: String
+  },
+  created_at: Date,
+  updated_at: Date
+});
+
+
+
+var bcrypt = require('bcrypt')
+var SALT_WORK_FACTOR = 10;
+
+UserSchema.pre('save', function(next) {
+    var user = this;
+
+    // only hash the password if it has been modified (or is new)
+    if (!user.isModified('password')) return next();
+
+    // generate a salt
+    bcrypt.genSalt(SALT_WORK_FACTOR, function(err, salt) {
+        if (err) return next(err);
+
+        // hash the password along with our new salt
+        bcrypt.hash(user.password, salt, function(err, hash) {
+            if (err) return next(err);
+
+            // override the cleartext password with the hashed one
+            user.password = hash;
+            next();
+        });
+    });
+});
+UserSchema.methods.comparePassword = function(candidatePassword, cb) {
+    bcrypt.compare(candidatePassword, this.password, function(err, isMatch) {
+        if (err) return cb(err);
+        cb(null, isMatch);
+    });
+};
+
+// the schema is useless so far
+// we need to create a model using it
+var User = mongoose.model('User', UserSchema);
+//end para autenticacao
+
+// create a new user
+/*var admin = new User({
+  name: 'admin2',
+  username: 'admin2',
+  password: '123456'
+});
+
+admin.save(function(err) {
+  if (err) throw err;
+
+  console.log('User saved successfully!');
+});*/
+
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -39,11 +113,51 @@ app.use(session({ path: '/', httpOnly: true, secure: false, maxAge: null ,  geni
     return require('crypto').randomBytes(48).toString('hex');
   },resave: true,saveUninitialized:false,secret: 'keyboard cat'}));
 app.use(flash())
+app.use(passport.initialize());
+app.use(passport.session());
+
 app.use(express.static(path.join(__dirname, 'public')));
 
+passport.use(new LocalStrategy({
+    // set the field name here
+    usernameField: 'username',
+    passwordField: 'password'
+  },
+  function(p_username, p_password, done) {
+    /* get the username and password from the input arguments of the function */
 
+    // query the user from the database
+    // don't care the way I query from database, you can use
+    // any method to query the user from database
+    User.findOne( { username: p_username}, function(err, user) {
+      if (err) return done(err);
+      if(!user)
+        return done(null, false, {message: "The user is not exist"});
+      else
+        user.comparePassword(p_password, function(err, isMatch){
+          if(err) return done(err);
+          if(isMatch){
+            return done(null, user);
+          }else{
+            return done(null, false, {message: "Wrong password"});
+          }
+        })
+    });
+  }
+));
 
+passport.serializeUser(function(user, done) {
+  console.log(user)
+  done(null, user._id);
+});
 
+passport.deserializeUser(function(id, done) {
+  // query the current user from database
+  User.findById(id, function(err, user) {
+    if (err) done(new Error('User ' + id + ' does not exist'));;
+    done(null, user);
+  });
+});
 
 // app.use(multer({ dest: './uploads/',
 //  rename: function (fieldname, filename) {
@@ -121,7 +235,10 @@ var Imagem = restful.model( "imagem", mongoose.Schema({
 Imagem.register(app, '/api/imagens');
 
 app.use('/', routes);
+app.use('/', loginRoutes);
 app.use('/imagens', imgRoutes);
+
+
 //app.use('/users', users);
 
 // catch 404 and forward to error handler
@@ -155,5 +272,15 @@ app.use(function(err, req, res, next) {
   });
 });
 
+
+function requireAuth(req, res, next){
+
+  // check if the user is logged in
+  if(!req.isAuthenticated()){
+    req.session.messages = "You need to login to view this page";
+    res.redirect('/login');
+  }
+  next();
+}
 
 module.exports = app;
