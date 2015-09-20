@@ -48,7 +48,7 @@ router.post('/login', function (req, res, next) {
 router.get('/logout', function logout(req, res){
   if(req.isAuthenticated()){
     req.logout();
-    req.session.messages = req.i18n.__("Log out successfully");
+    req.session.messages = "Log out successfully";
   }
     res.redirect('/');
 });

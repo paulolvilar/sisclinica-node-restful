@@ -136,7 +136,7 @@
                   </div>
                   <form>
                     <div class="form-group">
-                      <textarea id="nv-hppp" class="form-control" rows="2">{{evolucao.texto}}</textarea>
+                      <textarea id="nv-hppp" class="form-control" readonly rows="2">{{evolucao.texto}}</textarea>
                     </div>
                   </form>
                 </div>
@@ -161,6 +161,14 @@
       </div>
 
 <style type="text/css">
+textarea {
+   resize: none;
+   word-wrap: break-word;
+   transition: 0.05s;
+   -moz-transition: 0.05s;
+   -webkit-transition: 0.05s;
+   -o-transition: 0.05s;
+ }
 
 .thumb {
     width: 24px;

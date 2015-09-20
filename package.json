@@ -6,7 +6,7 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
-    "bcrypt": "^0.8.5",
+    "bcryptjs": "*",
     "body-parser": "*",
     "connect-flash": "^0.1.1",
     "cookie-parser": "*",
@@ -15,6 +15,7 @@
     "ejs": "*",
     "express": "*",
     "express-session": "*",
+    "method-override": "^2.3.5",
     "mongoose": "*",
     "morgan": "*",
     "multer": "^1.0.3",

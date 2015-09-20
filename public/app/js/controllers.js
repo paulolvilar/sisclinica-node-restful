@@ -1,12 +1,16 @@
 var sisclinicaControllers = angular.module('sisclinicaControllers', ['ngFileUpload']);
 
 
-sisclinicaControllers.controller('PacienteListCtrl', ['$scope', 'PacientesModel',
-  function ($scope, PacientesModel) {
+sisclinicaControllers.controller('PacienteListCtrl', ['$scope', '$rootScope', 'PacientesModel',
+  function ($scope, $rootScope, PacientesModel) {
     $scope.pacientes=[]
+    $scope.nomePaciente = $rootScope.nomePaciente
     $scope.get=function(){
+      $rootScope.nomePaciente = $scope.nomePaciente
       $scope.pacientes=PacientesModel.query({nome__regex:"/"+$scope.nomePaciente+"+/i"})
     }
+    if($scope.nomePaciente) $scope.get()
+    
   }]);
 
 

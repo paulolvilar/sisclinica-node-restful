@@ -47,8 +47,7 @@ var UserSchema = new Schema({
 });
 
 
-
-var bcrypt = require('bcrypt')
+var bcrypt = require('bcryptjs')
 var SALT_WORK_FACTOR = 10;
 
 UserSchema.pre('save', function(next) {
@@ -78,6 +77,16 @@ UserSchema.methods.comparePassword = function(candidatePassword, cb) {
     });
 };
 
+function requireAuth(req, res, next){
+
+  // check if the user is logged in
+  if(!req.isAuthenticated()){
+    req.session.messages = "You need to login to view this page";
+    res.redirect('/login');
+  }
+  next();
+}
+
 // the schema is useless so far
 // we need to create a model using it
 var User = mongoose.model('User', UserSchema);
@@ -94,8 +103,8 @@ admin.save(function(err) {
   if (err) throw err;
 
   console.log('User saved successfully!');
-});*/
-
+});
+*/
 
 
 // view engine setup
@@ -159,37 +168,6 @@ passport.deserializeUser(function(id, done) {
   });
 });
 
-// app.use(multer({ dest: './uploads/',
-//  rename: function (fieldname, filename) {
-//     return filename+Date.now();
-//   },
-// onFileUploadStart: function (file) {
-//   console.log(file.originalname + ' is starting ...')
-// },
-// onFileUploadComplete: function (file) {
-//   console.log(file.fieldname + ' uploaded to  ' + file.path)
-//   done=true;
-// }
-// }));
-
-
-
-
-/*
-var hashPassword = function(req, res, next) {
-  if (!req.body.password)
-    return next({ status: 400, err: "No password!" }); // We can also throw an error from a before route
-  req.body.password = bcrypt.hashSync(req.body.password, 10); // Using bcrypt
-  return next(); // Call the handler
-}
-
-var sendEmail = function(req, res, next) {
-  // We can get the user from res.bundle and status code from res.status and
-  // trigger an error by calling next(err) or populate information that would otherwise be miggins
-  next(); // I'll just pass though
-}
-*/
-
 var Paciente = restful.model( "paciente", mongoose.Schema({
     nome: 'string',
     email: 'string',
@@ -224,7 +202,10 @@ var Paciente = restful.model( "paciente", mongoose.Schema({
   }))
   .methods(['get', 'put', 'delete', 'post']);
 
-Paciente.register(app, '/api/pacientes'); // Register the user model at the localhost:3000/paciente
+app.use('/', loginRoutes);
+app.use('/',requireAuth);
+
+Paciente.register(app, '/api/pacientes'); // Register the user model at the localhost:3000/api/paciente
 
 var Imagem = restful.model( "imagem", mongoose.Schema({
     filename: 'string',
@@ -235,7 +216,6 @@ var Imagem = restful.model( "imagem", mongoose.Schema({
 Imagem.register(app, '/api/imagens');
 
 app.use('/', routes);
-app.use('/', loginRoutes);
 app.use('/imagens', imgRoutes);
 
 
