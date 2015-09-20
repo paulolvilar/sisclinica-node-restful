@@ -97,7 +97,12 @@ sisclinicaControllers.controller('PacienteCtrl', ['$rootScope','$scope', '$route
       if($scope.paciente._id){
         $scope.paciente.$update(function(){$scope.paciente=PacientesModel.get({_id:$scope.paciente_id}); $rootScope.successMsg.push('paciente atualizado com sucesso')})
       }else{
-        PacientesModel.save($scope.paciente,function(){$rootScope.successMsg.push('paciente inserido com sucesso')})  
+        PacientesModel.save($scope.paciente,function(data){
+          $scope.paciente=data
+          $scope.paciente_id = $scope.paciente._id
+          $rootScope.nomePaciente =  $scope.paciente.nome
+          $rootScope.successMsg.push('paciente inserido com sucesso')}
+        )  
         
       }
       

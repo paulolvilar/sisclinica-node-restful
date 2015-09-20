@@ -131,7 +131,7 @@ sisclinicaApp.directive('textarea', function() {
 
             element.bind( 'keyup keydown keypress change ' , update );
 
-            setTimeout(function() { update(); }, 500);
+            setTimeout(function() { update(); }, 1000);
         }
     }
 });

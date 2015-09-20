@@ -7,4 +7,29 @@ router.get('/', function(req, res, next) {
 });
 
 
+var multer = require('multer');
+
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'uploads/')
+  },
+  filename: function (req, file, cb) {
+    cb(null, req.body.pacienteid+file.originalname)
+  }
+})
+
+var upload = multer({ storage: storage })
+var cpUpload = upload.single('file');
+
+router.post('/createpost', function(req,res){
+    cpUpload(req, res, function (err) {
+    if (err) {
+      console.log(err)
+      res.status(500).send(err)
+    }
+    res.send("")
+  })
+})
+
+
 module.exports = router;
